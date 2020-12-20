@@ -1,0 +1,33 @@
+REM  这是注释
+REM  set  /p comment = "please input code change description"
+REM 下面为复制dist目录下的到此脚本当前目录的批处理命令
+del index.html 404.html favicon.ico
+rd static /s /q
+copy ..\dist\precache-manifest.ebe190726ad23fab3e73cc1f5672c372.js
+copy ..\dist\manifest.json
+copy ..\dist\robots.txt
+copy ..\dist\service-worker.js
+copy ..\dist\index.html .
+copy ..\dist\favicon.ico .
+copy ..\dist\index.html  404.html
+xcopy /e/y/i/f ..\dist\static .\img
+xcopy /e/y/i/f ..\dist\img .\static
+:: 下面为提交代码到git仓库的批处理命令
+:: git config --local --unset user.name
+:: git config --local --unset user.email
+git config --local  user.name "Junior233"
+git config --local  user.email "3181074645@qq.com"
+git pull
+git add *
+git config user.name
+set /p comment="请输入代码变更说明:"
+if "%comment%"=="" ( 
+    git commit -m "[%date% %time%] update"
+    echo "默认代码变更说明为[%date% %time%] update"
+) else (
+    git commit -m "[%date% %time%] %comment%"
+    echo "自定义代码变更说明为%comment%"
+)
+git push origin main
+::pause
+
