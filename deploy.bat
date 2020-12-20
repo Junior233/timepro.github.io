@@ -3,15 +3,10 @@ REM  set  /p comment = "please input code change description"
 REM 下面为复制dist目录下的到此脚本当前目录的批处理命令
 del index.html 404.html favicon.ico
 rd static /s /q
-copy ..\dist\precache-manifest.ebe190726ad23fab3e73cc1f5672c372.js
-copy ..\dist\manifest.json
-copy ..\dist\robots.txt
-copy ..\dist\service-worker.js
 copy ..\dist\index.html .
 copy ..\dist\favicon.ico .
 copy ..\dist\index.html  404.html
-xcopy /e/y/i/f ..\dist\static .\img
-xcopy /e/y/i/f ..\dist\img .\static
+xcopy /e/y/i/f ..\dist\static .\static
 :: 下面为提交代码到git仓库的批处理命令
 :: git config --local --unset user.name
 :: git config --local --unset user.email
@@ -28,6 +23,7 @@ if "%comment%"=="" (
     git commit -m "[%date% %time%] %comment%"
     echo "自定义代码变更说明为%comment%"
 )
-git push origin main
+git push
 ::pause
+
 
